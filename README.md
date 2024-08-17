@@ -40,7 +40,7 @@ python3 chatbot.py
 
 Run the below command to deploy the model on web using Flask
 ```
-python app.py
+python3 app.py
 ```
 
 ### Reference
