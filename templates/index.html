@@ -2,8 +2,6 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-
-    <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,7 +10,6 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
   </head>
   <body>
     <div class="container">
@@ -21,60 +18,65 @@
       <hr>
       <br>
 
-        <div class="row">
-          <div class="col-lg-9">
-            <input class="form-control" type="text" name="question" id="question">
-          </div>
-          <div class="col-lg-3">
-            <button class="btn btn-primary btn-block" id="submit-button">Send</button>
-          </div>
+      <div class="row">
+        <div class="col-lg-9">
+          <select class="form-control" id="question">
+            <option value="">Select a question...</option>
+            <option value="What is Natural Language Processing?">What is Natural Language Processing?</option>
+            <option value="Define NLP">Define NLP</option>
+            <option value="Explain Natural Language Processing">Explain Natural Language Processing</option>
+            <option value="What does NLP stand for?">What does NLP stand for?</option>
+            <option value="What are the applications of NLP?">What are the applications of NLP?</option>
+            <option value="How is NLP used?">How is NLP used?</option>
+            <option value="What techniques are used in NLP?">What techniques are used in NLP?</option>
+            <option value="What is the history of NLP?">What is the history of NLP?</option>
+            <option value="What are the challenges in NLP?">What are the challenges in NLP?</option>
+            <option value="How is machine learning used in NLP?">How is machine learning used in NLP?</option>
+          </select>
         </div>
-        <br>
-        <div class="row">
-          <div class="col">
-            <p id="response"></p>
-          </div>
+        <div class="col-lg-3">
+          <button class="btn btn-primary btn-block" id="submit-button">Send</button>
         </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col">
+          <p id="response"></p>
+        </div>
+      </div>
 
     </div>
 
-    <script src="/static/jquery.min.js" ></script>
-
+    <script src="/static/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-
     <script>
-
-
       jQuery(document).ready(function() {
-
         $("#submit-button").click(function(e) {
           e.preventDefault();
 
+          var selectedQuestion = $("#question").val();
+          if (selectedQuestion === "") {
+            alert('Please select a question from the dropdown.');
+            return;
+          }
 
           $.ajax({
-              type: "POST",
-              url: "/chatbot",
-              data: {
-                  question: $("#question").val()
-              },
-              success: function(result) {
-                $("#response").append("<br>Me: "+$("#question").val()+ "<br> NLP Assistant: "+result.response);
-                $("#question").val("")
-              },
-              error: function(result) {
-                  alert('error');
-              }
+            type: "POST",
+            url: "/chatbot",
+            data: {
+              question: selectedQuestion
+            },
+            success: function(result) {
+              $("#response").append("<br>Me: " + selectedQuestion + "<br> NLP Assistant: " + result.response);
+              $("#question").val("");  // Reset the dropdown to the default option
+            },
+            error: function(result) {
+              alert('error');
+            }
           });
-
-
-
         });
-
       });
-
-
     </script>
-
   </body>
 </html>
