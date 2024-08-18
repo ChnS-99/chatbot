@@ -36,6 +36,13 @@ Run the below command to train and create the model
 python3 chatbot.py
 ```
 
+### Evaluation
+
+Run the below command to evaluate the model
+```
+python3 eval.py
+```
+
 ### Deploying
 
 Run the below command to deploy the model on web using Flask
